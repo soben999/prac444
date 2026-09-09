@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customs.css') }}">
+    <title>Светлые Сны</title>
+</head>
+<body class="container">
+<header class="d-flex flex-wrap justify-content-center py-3">
+    <a href="{{ url_for('index') }}"
+       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <span class="fs-4 mx-2 fw-medium">Светлые Сны</span>
+    </a>
+
+    <ul class="nav">
+        <li class="nav-item"><a href="#" class="nav-link">Приезжайте как гости, уезжайте как друзья!</a></li>
+        <li class="nav-item"><a href="{{ url_for('login') }}" class="nav-link">Панель администратора</a></li>
+    </ul>
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} text-center" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<!--описание номеров-->
+<main>
+    <div class="d-flex justify-content-between flex-wrap">
+        <h1>Каталог номеров</h1>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                {{ active_category or 'Категории' }}
+            </button>
+            <ul class="dropdown-menu">
+                {% for cat in categories %}
+                <li><a class="dropdown-item" href="{{ url_for('index', category=cat) }}">{{ cat }}</a></li>
+                {% endfor %}
+            </ul>
+            {% if active_category %}
+            <a href="{{ url_for('index') }}" class="btn btn-danger my-1">Сбросить фильтр</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="d-flex justify-content-around flex-wrap align-items-center">
+        {% for room in rooms %}
+        <div class="card">
+            <img src="{{ url_for('static', filename='img/' + room.image_url) }}" class="card-img-top"
+                 alt="{{ room.category }}"
+                 onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/standart.png') }}';">
+            <div class="card-body">
+                <h3>Категория: {{ room.category }}</h3>
+                <h5>Цена: {{ room.price_per_person | int }} ₽ / чел</h5>
+                <h5>Макс. гостей: {{ room.max_guests }}</h5>
+                {% if room.features %}
+                <h5>Характеристики:</h5>
+                <ul class="list-group">
+                    <li class="list-group-item">{{ room.features }}</li>
+                </ul>
+                {% endif %}
+            </div>
+            <div class="d-grid gap-2">
+                <a href="{{ url_for('order', room_id=room.id) }}" class="btn btn-success">Забронировать</a>
+            </div>
+        </div>
+        {% else %}
+        <p>Номера в данной категории не найдены.</p>
+        {% endfor %}
+    </div>
+
+</main>
+<!--Контактная информация-->
+<footer class="py-2 my-2">
+    <ul class="nav justify-content-between align-items-center">
+        <li class="nav-item"><a href="#" class="nav-link text-body-secondary">ул. г.Москва, ул. Ивовая, 48</a></li>
+        <li class="nav-item"><a href="#" class="nav-link text-body-secondary">Время работы: Пн-Пт, с 8:00-17:00</a></li>
+        <li class="nav-item"><a href="tel:88005553535" class="nav-link text-body-secondary">тел. 8 (800) 555 - 35 - 35</a></li>
+        <li class="nav-item"><a href="mailto:обращения@СветлыеСны.рф" class="nav-link text-body-secondary">Email: обращения@СветлыеСны.рф</a>
+        </li>
+    </ul>
+</footer>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

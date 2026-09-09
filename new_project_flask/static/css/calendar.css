@@ -1,0 +1,107 @@
+.calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.legend-box {
+    display: inline-block;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 3px;
+    margin-right: 0.35rem;
+    vertical-align: -1px;
+}
+
+.legend-free { background: #ffffff; border: 1px solid #ced4da; }
+.legend-busy { background: #f1a5a5; }
+.legend-selected { background: #24B771; }
+.legend-past { background: #e9ecef; }
+
+.booking-calendar {
+    max-width: 22rem;
+    border-radius: 5px;
+    box-shadow: 0 0 1px 0 rgba(33, 37, 41, 0.25);
+    background: #ffffff;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+}
+
+.booking-calendar .cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.booking-calendar .cal-nav-btn {
+    border: none;
+    background: transparent;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0.15rem 0.6rem;
+    border-radius: 4px;
+}
+
+.booking-calendar .cal-nav-btn:hover {
+    background: #f1f1f1;
+}
+
+.booking-calendar .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.booking-calendar .cal-weekday {
+    color: #6c757d;
+    font-weight: 500;
+    padding: 2px 0;
+}
+
+.booking-calendar .cal-day {
+    padding: 0.4rem 0;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.booking-calendar .cal-day.cal-empty {
+    cursor: default;
+}
+
+.booking-calendar .cal-day.cal-past {
+    color: #adb5bd;
+    background: #f1f3f5;
+    cursor: not-allowed;
+}
+
+.booking-calendar .cal-day.cal-busy {
+    color: #842029;
+    background: #f1a5a5;
+    cursor: not-allowed;
+}
+
+.booking-calendar .cal-day.cal-today {
+    outline: 2px solid #007AFF;
+    outline-offset: -2px;
+}
+
+.booking-calendar .cal-day.cal-selected {
+    background: #24B771;
+    color: #ffffff;
+}
+
+.booking-calendar .cal-day.cal-in-range {
+    background: rgba(36, 183, 113, 0.35);
+}
+
+.booking-calendar .cal-day:not(.cal-past):not(.cal-busy):not(.cal-empty):hover {
+    background: rgba(0, 122, 255, 0.15);
+}
